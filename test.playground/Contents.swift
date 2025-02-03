@@ -174,6 +174,15 @@ let name: studentName = "Kanishk"
 name
 
 func countLettersInString(myString str: String) {
+  var a = 0
+  var elements = ""
+  for item in str {
+    if !elements.contains(item) {
+      elements.append(item)
+      a += 1
+    }
+  }
+  print("elements", elements.count, "a", a)
   for item in str {
     print(item)
   }
@@ -235,8 +244,14 @@ class EscapingClosureVM: ObservableObject {
     }
   }
 }
-
-
+func downloadData2(completionHandler: @escaping(_ data: String) -> ()) {
+  DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+    completionHandler("New Data")
+  }
+}
+downloadData2 { data in
+  
+}
 
 // Closure Example - pass a function inside another function without a name and also returns it
 func calculator(n1: Int, n2: Int, operation: (Int, Int) -> (Int)) -> Int {
@@ -266,8 +281,16 @@ calculator(n1: 2, n2: 5) { no1, no2 in
 // Or,
 calculator(n1: 2, n2: 5) { $0 * $1 }
 
+func increaseByOne(a: [Int], operate: ([Int]) -> ([Int])) -> [Int] {
+  return operate(a)
+}
 
 let array = [0,1,2,3,4,5,6,7,8,9]
+
+let results = increaseByOne(a: array) { (a: [Int]) -> [Int] in
+  return a.map { $0 + 1 }
+}
+print(results)
 
 func addOne(n1: Int) -> Int {
   return n1 + 1
@@ -328,7 +351,6 @@ extension CanFly {
   }
 }
 
-
 // Protocols used on Enums
 enum Foo1: String, CaseIterable {
   case Bing = "bing"
@@ -341,6 +363,7 @@ Foo1.allCases.forEach { caseValue in
   stringValues.append(caseValue.rawValue)
 }
 
+print(Foo1.Bing.rawValue)
 // Print the array
 print(stringValues)
 
